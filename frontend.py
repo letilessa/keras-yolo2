@@ -308,14 +308,13 @@ class YOLO(object):
         ############################################
         # Make a few callbacks
         ############################################
-
         
-        checkpoint = ModelCheckpoint('/media/eHD/leticia/models/test19.{epoch:02d}-{val_loss:.2f}.h5', 
+        checkpoint = ModelCheckpoint(saved_weights_name, 
                                      monitor='val_loss', 
                                      verbose=1, 
                                      save_best_only=True, 
                                      mode='min', 
-                                     period=5)
+                                     period=1)
         tensorboard = TensorBoard(log_dir='/media/eHD/leticia/logs/', 
                                   histogram_freq=0, 
                                   #write_batch_performance=True,
@@ -337,7 +336,7 @@ class YOLO(object):
                                  max_queue_size   = 8)      
 
         ############################################
-        # Compute mAP on the validation set
+        # Compute mAP on the test set
         ############################################
         average_precisions = self.evaluate(test_generator)     
 
