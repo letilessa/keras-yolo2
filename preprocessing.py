@@ -8,15 +8,43 @@ from keras.utils import Sequence
 import xml.etree.ElementTree as ET
 from utils import BoundBox, bbox_iou
 
+sets_from_2007 = [('2007', 'train'), ('2007', 'val')]
+train_set = [('2012', 'train')]
+val_set = [('2012', 'val')]
+test_set = [('2007', 'test')]
+
+def get_ids(voc_path, datasets):
+    """Get image identifiers for corresponding list of dataset identifies.
+    code originally from https://github.com/allanzelener/YAD2K
+    Parameters
+    ----------
+    voc_path : str
+        Path to VOCdevkit directory.
+    datasets : list of str tuples
+        List of dataset identifiers in the form of (year, dataset) pairs.
+    Returns
+    -------
+    ids : list of str
+        List of all image identifiers for given datasets.
+    """
+    ids = []
+    for year, image_set in datasets:
+        id_file = os.path.join(voc_path, 'ImageSets/Main/{}.txt'.format(image_set))
+        with open(id_file, 'r') as image_ids:
+            ids.extend(map(str.strip, image_ids.readlines()))
+    return ids
+
 def parse_annotation(ann_dir, img_dir, labels=[]):
     all_imgs = []
     seen_labels = {}
     
-    for ann in sorted(os.listdir(ann_dir)):
+    for image_id in sorted(ids):
+        fname = os.path.join(ann_dir, 'Annotations/{}.xml'.format(image_id))
         img = {'object':[]}
-
-        tree = ET.parse(ann_dir + ann)
         
+        with open(fname) as in_file:
+            tree = ET.parse(in_file)
+            
         for elem in tree.iter():
             if 'filename' in elem.tag:
                 img['filename'] = img_dir + elem.text
