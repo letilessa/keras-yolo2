@@ -8,7 +8,7 @@ from frontend import YOLO
 import json
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
 
 argparser = argparse.ArgumentParser(
     description='Train and validate YOLO_v2 model on any dataset')
@@ -29,21 +29,26 @@ def _main_(args):
     ###############################
 
     # parse annotations of the training set
-    train_imgs, train_labels = parse_annotation(config['train']['train_annot_folder'], 
-                                                config['train']['train_image_folder'], 
-                                                config['model']['labels'])
+    voc_path ='/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/'
+    test_path = '/media/eHD/datasets/pascalVOC2007/VOC_test/'
+    train_ids = get_ids(voc_path, train_set)
+    val_ids = get_ids(voc_path, val_set)
+    test_ids = get_ids(test_path, test_set)
+    train_ids_2007 = get_ids('/media/eHD/datasets/pascalVOC2007/VOC_train/', sets_from_2007)
 
-    # parse annotations of the validation set, if any, otherwise split the training set
-    if os.path.exists(config['valid']['valid_annot_folder']):
-        valid_imgs, valid_labels = parse_annotation(config['valid']['valid_annot_folder'], 
-                                                    config['valid']['valid_image_folder'], 
-                                                    config['model']['labels'])
-    else:
-        train_valid_split = int(0.8*len(train_imgs))
-        np.random.shuffle(train_imgs)
-
-        valid_imgs = train_imgs[train_valid_split:]
-        train_imgs = train_imgs[:train_valid_split]
+    train_imgs_2007, seen_train_labels_2007 = parse_annotation('/media/eHD/datasets/pascalVOC2007/VOC_train/', 
+                                                           '/media/eHD/datasets/pascalVOC2007/VOC_train/JPEGImages/', 
+                                                           train_ids_2007, labels=LABELS)
+    train_imgs_2012, seen_train_labels_2012 = parse_annotation(voc_path, '/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/JPEGImages/', 
+                                                           train_ids, labels=LABELS)
+    train_imgs=train_imgs_2007+train_imgs_2012
+    
+    valid_imgs, seen_valid_labels = parse_annotation(voc_path, '/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/JPEGImages/', 
+                                                    val_ids, labels=LABELS)
+      
+    test_imgs, seen_test_labels = parse_annotation(test_path, 
+                                               '/media/eHD/datasets/pascalVOC2007/VOC_test/JPEGImages/', 
+                                                test_ids, labels=LABELS)
 
     if len(config['model']['labels']) > 0:
         overlap_labels = set(config['model']['labels']).intersection(set(train_labels.keys()))
