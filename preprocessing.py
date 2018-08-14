@@ -29,7 +29,7 @@ def get_ids(voc_path, datasets):
             ids.extend(map(str.strip, image_ids.readlines()))
     return ids
 
-def parse_annotation(ann_dir, img_dir, labels=[]):
+def parse_annotation(ann_dir, img_dir, ids, labels=[]):
     all_imgs = []
     seen_labels = {}
     
