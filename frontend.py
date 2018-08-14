@@ -1,4 +1,6 @@
 from keras.models import Model
+from keras.models import load_model
+from keras.utils.generic_utils import CustomObjectScope
 from keras.layers import Reshape, Activation, Conv2D, Input, MaxPooling2D, BatchNormalization, Flatten, Dense, Lambda
 from keras.layers.advanced_activations import LeakyReLU
 import tensorflow as tf
@@ -240,8 +242,14 @@ class YOLO(object):
         
         return loss
 
+    def relu6(x):
+    return K.relu(x, max_value=6)
+    
     def load_weights(self, weight_path):
-        self.model.load_weights(weight_path)
+        with CustomObjectScope({'relu6':relu6, 'custom_loss':custom_loss}):
+            model = load_model(weight_path)
+        weights=model.get_weights()
+        self.model.load_weights(weights)
 
     def train(self, train_imgs,     # the list of images to train the model
                     valid_imgs,     # the list of images used to validate the model
