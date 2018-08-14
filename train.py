@@ -29,6 +29,11 @@ def _main_(args):
     ###############################
 
     # parse annotations of the training set
+    sets_from_2007 = [('2007', 'train'), ('2007', 'val')]
+    train_set = [('2012', 'train')]
+    val_set = [('2012', 'val')]
+    test_set = [('2007', 'test')]
+    
     voc_path ='/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/'
     test_path = '/media/eHD/datasets/pascalVOC2007/VOC_test/'
     train_ids = get_ids(voc_path, train_set)
