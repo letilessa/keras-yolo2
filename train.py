@@ -38,17 +38,17 @@ def _main_(args):
 
     train_imgs_2007, seen_train_labels_2007 = parse_annotation('/media/eHD/datasets/pascalVOC2007/VOC_train/', 
                                                            '/media/eHD/datasets/pascalVOC2007/VOC_train/JPEGImages/', 
-                                                           train_ids_2007, labels=LABELS)
+                                                           train_ids_2007, config['model']['labels'])
     train_imgs_2012, seen_train_labels_2012 = parse_annotation(voc_path, '/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/JPEGImages/', 
-                                                           train_ids, labels=LABELS)
+                                                           train_ids, config['model']['labels'])
     train_imgs=train_imgs_2007+train_imgs_2012
     
     valid_imgs, seen_valid_labels = parse_annotation(voc_path, '/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/JPEGImages/', 
-                                                    val_ids, labels=LABELS)
+                                                    val_ids, config['model']['labels'])
       
     test_imgs, seen_test_labels = parse_annotation(test_path, 
                                                '/media/eHD/datasets/pascalVOC2007/VOC_test/JPEGImages/', 
-                                                test_ids, labels=LABELS)
+                                                test_ids, config['model']['labels'])
 
     if len(config['model']['labels']) > 0:
         overlap_labels = set(config['model']['labels']).intersection(set(train_labels.keys()))
