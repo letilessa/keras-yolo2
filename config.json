@@ -12,18 +12,18 @@
         "train_annot_folder":   "/home/andy/data/kangaroo/annots/",     
           
         "train_times":          1,
-        "pretrained_weights":   "/media/eHD/leticia/models/test20.h5",
+        "pretrained_weights":   "",
         "batch_size":           24,
         "learning_rate":        1e-4,
-        "nb_epochs":            100,
-        "warmup_epochs":        0,
+        "nb_epochs":            0,
+        "warmup_epochs":        3,
 
         "object_scale":         5.0 ,
         "no_object_scale":      1.0,
         "coord_scale":          1.0,
         "class_scale":          1.0,
 
-        "saved_weights_name":   "/media/eHD/leticia/models/test21.h5",
+        "saved_weights_name":   "/media/eHD/leticia/models/test20.h5",
         "debug":                true
     },
 
