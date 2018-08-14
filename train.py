@@ -49,7 +49,10 @@ def _main_(args):
     test_imgs, seen_test_labels = parse_annotation(test_path, 
                                                '/media/eHD/datasets/pascalVOC2007/VOC_test/JPEGImages/', 
                                                 test_ids, config['model']['labels'])
-
+    print('Number of train images:', len(train_imgs))
+    print('Number of validation images:', len(valid_imgs))
+    print('Number of test images:', len(test_imgs))
+    
     if len(config['model']['labels']) > 0:
         overlap_labels = set(config['model']['labels']).intersection(set(train_labels.keys()))
 
