@@ -12,7 +12,7 @@
         "train_annot_folder":   "/home/andy/data/kangaroo/annots/",     
           
         "train_times":          1,
-        "pretrained_weights":   "/media/eHD/leticia/mobilenet_backend.h5",
+        "pretrained_weights":   "",
         "batch_size":           24,
         "learning_rate":        1e-4,
         "nb_epochs":            1,
