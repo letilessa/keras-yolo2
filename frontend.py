@@ -242,15 +242,9 @@ class YOLO(object):
             loss = tf.Print(loss, [total_recall/seen], message='Average Recall \t', summarize=1000)
         
         return loss
-
-    def relu6(x):
-        return K.relu(x, max_value=6)
-    
+   
     def load_weights(self, weight_path):
-        with CustomObjectScope({'relu6':self.relu6, 'custom_loss':self.custom_loss}):
-            model = load_model(weight_path)
-        weights=model.get_weights()
-        self.model.load_weights(weights)
+        self.model.load_weights(weight_path)
 
     def train(self, train_imgs,     # the list of images to train the model
                     valid_imgs,     # the list of images used to validate the model
@@ -322,7 +316,8 @@ class YOLO(object):
         checkpoint = ModelCheckpoint(saved_weights_name, 
                                      monitor='val_loss', 
                                      verbose=1, 
-                                     save_best_only=True, 
+                                     save_best_only=True,
+                                     save_weights_only=True,
                                      mode='min', 
                                      period=1)
         tensorboard = TensorBoard(log_dir='/media/eHD/leticia/logs/', 
