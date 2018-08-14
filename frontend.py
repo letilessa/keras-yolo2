@@ -317,7 +317,7 @@ class YOLO(object):
                                      monitor='val_loss', 
                                      verbose=1, 
                                      save_best_only=True,
-                                     save_weights_only=True,
+                                     save_weights_only=False,
                                      mode='min', 
                                      period=1)
         tensorboard = TensorBoard(log_dir='/media/eHD/leticia/logs/', 
@@ -347,8 +347,7 @@ class YOLO(object):
         plt.xlabel('epoch') 
         plt.legend(['train', 'val'], loc='upper left') 
         plt.savefig('/media/eHD/leticia/plots/test20.png')
-        plt.show()
-
+        
         ############################################
         # Compute mAP on the test set
         ############################################
