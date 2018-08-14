@@ -289,7 +289,11 @@ class YOLO(object):
         valid_generator = BatchGenerator(valid_imgs, 
                                      generator_config, 
                                      norm=self.feature_extractor.normalize,
-                                     jitter=False)   
+                                     jitter=False)
+        test_generator = BatchGenerator(test_imgs, 
+                                     generator_config, 
+                                     norm=self.feature_extractor.normalize,
+                                     jitter=False) 
                                      
         self.warmup_batches  = warmup_epochs * (train_times*len(train_generator) + valid_times*len(valid_generator))   
 
@@ -297,25 +301,21 @@ class YOLO(object):
         # Compile the model
         ############################################
 
-        optimizer = Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+        optimizer = SGD(lr=1e-4, decay=0.0005, momentum=0.9)
         self.model.compile(loss=self.custom_loss, optimizer=optimizer)
 
         ############################################
         # Make a few callbacks
         ############################################
 
-        early_stop = EarlyStopping(monitor='val_loss', 
-                           min_delta=0.001, 
-                           patience=3, 
-                           mode='min', 
-                           verbose=1)
-        checkpoint = ModelCheckpoint(saved_weights_name, 
+        
+        checkpoint = ModelCheckpoint('/media/eHD/leticia/models/test19.{epoch:02d}-{val_loss:.2f}.h5', 
                                      monitor='val_loss', 
                                      verbose=1, 
                                      save_best_only=True, 
                                      mode='min', 
-                                     period=1)
-        tensorboard = TensorBoard(log_dir=os.path.expanduser('~/logs/'), 
+                                     period=5)
+        tensorboard = TensorBoard(log_dir='/media/eHD/leticia/logs/', 
                                   histogram_freq=0, 
                                   #write_batch_performance=True,
                                   write_graph=True, 
@@ -331,14 +331,14 @@ class YOLO(object):
                                  verbose          = 2 if debug else 1,
                                  validation_data  = valid_generator,
                                  validation_steps = len(valid_generator) * valid_times,
-                                 callbacks        = [early_stop, checkpoint, tensorboard], 
+                                 callbacks        = [checkpoint, tensorboard], 
                                  workers          = 3,
                                  max_queue_size   = 8)      
 
         ############################################
         # Compute mAP on the validation set
         ############################################
-        average_precisions = self.evaluate(valid_generator)     
+        average_precisions = self.evaluate(test_generator)     
 
         # print evaluation
         for label, average_precision in average_precisions.items():
