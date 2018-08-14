@@ -339,15 +339,7 @@ class YOLO(object):
                                  callbacks        = [checkpoint, tensorboard], 
                                  workers          = 3,
                                  max_queue_size   = 8)
-        
-        plt.plot(history.history['loss']) 
-        plt.plot(history.history['val_loss']) 
-        plt.title('model loss') 
-        plt.ylabel('loss') 
-        plt.xlabel('epoch') 
-        plt.legend(['train', 'val'], loc='upper left') 
-        plt.savefig('/media/eHD/leticia/plots/test20.png')
-        
+                
         ############################################
         # Compute mAP on the test set
         ############################################
