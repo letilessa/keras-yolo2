@@ -3,6 +3,7 @@ from keras.models import load_model
 from keras.utils.generic_utils import CustomObjectScope
 from keras.layers import Reshape, Activation, Conv2D, Input, MaxPooling2D, BatchNormalization, Flatten, Dense, Lambda
 from keras.layers.advanced_activations import LeakyReLU
+from keras import backend as K
 import tensorflow as tf
 import matplotlib.pyplot as plt 
 import numpy as np
