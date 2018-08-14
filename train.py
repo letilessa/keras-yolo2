@@ -47,6 +47,7 @@ def _main_(args):
     train_imgs_2012, seen_train_labels_2012 = parse_annotation(voc_path, '/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/JPEGImages/', 
                                                            train_ids, config['model']['labels'])
     train_imgs=train_imgs_2007+train_imgs_2012
+    train_labels=seen_train_labels_2007+seen_train_labels_2012
     
     valid_imgs, seen_valid_labels = parse_annotation(voc_path, '/media/eHD/datasets/pascalVOC2012/VOCtrain/VOC2012/JPEGImages/', 
                                                     val_ids, config['model']['labels'])
