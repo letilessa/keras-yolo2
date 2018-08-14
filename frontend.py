@@ -2,6 +2,7 @@ from keras.models import Model
 from keras.layers import Reshape, Activation, Conv2D, Input, MaxPooling2D, BatchNormalization, Flatten, Dense, Lambda
 from keras.layers.advanced_activations import LeakyReLU
 import tensorflow as tf
+import matplotlib.pyplot as plt 
 import numpy as np
 import os
 import cv2
@@ -325,7 +326,7 @@ class YOLO(object):
         # Start the training process
         ############################################        
 
-        self.model.fit_generator(generator        = train_generator, 
+        history=self.model.fit_generator(generator        = train_generator, 
                                  steps_per_epoch  = len(train_generator) * train_times, 
                                  epochs           = warmup_epochs + nb_epochs, 
                                  verbose          = 2 if debug else 1,
@@ -333,7 +334,16 @@ class YOLO(object):
                                  validation_steps = len(valid_generator) * valid_times,
                                  callbacks        = [checkpoint, tensorboard], 
                                  workers          = 3,
-                                 max_queue_size   = 8)      
+                                 max_queue_size   = 8)
+        
+        plt.plot(history.history['loss']) 
+        plt.plot(history.history['val_loss']) 
+        plt.title('model loss') 
+        plt.ylabel('loss') 
+        plt.xlabel('epoch') 
+        plt.legend(['train', 'val'], loc='upper left') 
+        plt.savefig('/media/eHD/leticia/plots/test20.png')
+        plt.show()
 
         ############################################
         # Compute mAP on the test set
