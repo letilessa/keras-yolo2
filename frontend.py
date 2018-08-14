@@ -244,6 +244,7 @@ class YOLO(object):
 
     def train(self, train_imgs,     # the list of images to train the model
                     valid_imgs,     # the list of images used to validate the model
+                    test_imgs,      # the list of images used to test the model
                     train_times,    # the number of time to repeat the training set, often used for small datasets
                     valid_times,    # the number of times to repeat the validation set, often used for small datasets
                     nb_epochs,      # number of epoches
