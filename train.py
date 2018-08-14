@@ -3,7 +3,7 @@
 import argparse
 import os
 import numpy as np
-from preprocessing import parse_annotation
+from preprocessing import parse_annotation, get_ids
 from frontend import YOLO
 import json
 
