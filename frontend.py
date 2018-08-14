@@ -246,7 +246,7 @@ class YOLO(object):
         return K.relu(x, max_value=6)
     
     def load_weights(self, weight_path):
-        with CustomObjectScope({'relu6':relu6, 'custom_loss':custom_loss}):
+        with CustomObjectScope({'relu6':self.relu6, 'custom_loss':self.custom_loss}):
             model = load_model(weight_path)
         weights=model.get_weights()
         self.model.load_weights(weights)
