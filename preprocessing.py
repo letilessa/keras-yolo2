@@ -8,11 +8,6 @@ from keras.utils import Sequence
 import xml.etree.ElementTree as ET
 from utils import BoundBox, bbox_iou
 
-sets_from_2007 = [('2007', 'train'), ('2007', 'val')]
-train_set = [('2012', 'train')]
-val_set = [('2012', 'val')]
-test_set = [('2007', 'test')]
-
 def get_ids(voc_path, datasets):
     """Get image identifiers for corresponding list of dataset identifies.
     code originally from https://github.com/allanzelener/YAD2K
