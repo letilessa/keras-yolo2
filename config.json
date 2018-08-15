@@ -2,7 +2,7 @@
     "model" : {
         "backend":              "MobileNet",
         "input_size":           416,
-        "anchors":              [0.57273, 0.677385, 1.87446, 2.06253, 3.33843, 5.47434, 7.88282, 3.52778, 9.77052, 9.16828],
+        "anchors":              [2.21099,3.50877, 5.99194,8.65150, 8.09234,18.45314, 16.24892,19.35160, 26.73460,25.14580],
         "max_box_per_image":    10,        
         "labels":               ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
     },
