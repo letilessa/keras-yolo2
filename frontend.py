@@ -337,8 +337,8 @@ class YOLO(object):
                                  validation_data  = valid_generator,
                                  validation_steps = len(valid_generator) * valid_times,
                                  callbacks        = [checkpoint, tensorboard], 
-                                 workers          = 3,
-                                 max_queue_size   = 8)
+                                 workers          = 12,
+                                 max_queue_size   = 40)
                 
         ############################################
         # Compute mAP on the test set
