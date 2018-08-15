@@ -90,27 +90,7 @@ def _main_(args):
     if os.path.exists(config['train']['pretrained_weights']):
         print("Loading pre-trained weights in", config['train']['pretrained_weights'])
         yolo.load_weights(config['train']['pretrained_weights'])
-
-    ###############################
-    #   Start the warmup process 
-    ###############################
-
-    yolo.train(train_imgs         = train_imgs,
-               valid_imgs         = valid_imgs,
-               test_imgs          = test_imgs,
-               train_times        = config['train']['train_times'],
-               valid_times        = config['valid']['valid_times'],
-               nb_epochs          = 0, 
-               learning_rate      = config['train']['learning_rate'], 
-               batch_size         = config['train']['batch_size'],
-               warmup_epochs      = 3,
-               object_scale       = config['train']['object_scale'],
-               no_object_scale    = config['train']['no_object_scale'],
-               coord_scale        = config['train']['coord_scale'],
-               class_scale        = config['train']['class_scale'],
-               saved_weights_name = '/media/eHD/leticia/models/warmup.h5',
-               debug              = config['train']['debug'])
-    
+        
     ###############################
     #   Start the training process 
     ###############################
@@ -120,10 +100,10 @@ def _main_(args):
                test_imgs          = test_imgs,
                train_times        = config['train']['train_times'],
                valid_times        = config['valid']['valid_times'],
-               nb_epochs          = 100, 
+               nb_epochs          = config['train']['nb_epochs'], 
                learning_rate      = config['train']['learning_rate'], 
                batch_size         = config['train']['batch_size'],
-               warmup_epochs      = 0,
+               warmup_epochs      = config['train']['warmup_epochs'],
                object_scale       = config['train']['object_scale'],
                no_object_scale    = config['train']['no_object_scale'],
                coord_scale        = config['train']['coord_scale'],
