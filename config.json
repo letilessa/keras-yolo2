@@ -1,7 +1,7 @@
 {
     "model" : {
         "backend":              "MobileNet",
-        "input_size":           416,
+        "input_size":           224,
         "anchors":              [2.21099,3.50877, 5.99194,8.65150, 8.09234,18.45314, 16.24892,19.35160, 26.73460,25.14580],
         "max_box_per_image":    10,        
         "labels":               ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
@@ -13,9 +13,9 @@
           
         "train_times":          1,
         "pretrained_weights":   "",
-        "batch_size":           24,
+        "batch_size":           4,
         "learning_rate":        1e-4,
-        "nb_epochs":            100,
+        "nb_epochs":            10,
         "warmup_epochs":        3,
 
         "object_scale":         5.0 ,
